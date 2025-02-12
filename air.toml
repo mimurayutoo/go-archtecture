@@ -1,0 +1,27 @@
+root = "."
+tmp_dir = "tmp"
+[build]
+  cmd = "go build -o ./tmp/main ."
+  bin = "tmp/main"
+  full_bin = "APP_ENV=dev APP_PORT=8080 ./tmp/main"
+  include_ext = ["go", "tpl", "tmpl", "html"]
+  exclude_dir = ["assets", "tmp", "vendor"]
+  exclude_file = ["air.toml"]
+  follow_symlink = true
+  include_dir = ["."]
+  exclude_regex = ["_test.go"]
+[log]
+  level = "debug"
+  color = "true"
+  timestamp = "true"
+[serve]
+  grace = 2000
+  grace_timeout = 0
+  kill_delay = 0
+  retry = 3000
+  retry_count = 5
+  retry_delay = 500
+  retry_timeout = 0
+  watch = true
+  watch_delay = 200
+  watch_timeout = 0
