@@ -1,23 +1,30 @@
 package userModel
 
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
 type User struct {
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Age      int    `json:"age"`
-	Sex      string `json:"sex"`
+	ID        uint           `gorm:"primaryKey"`
+	CreatedAt time.Time      `gorm:"autoCreateTime"`
+	UpdatedAt time.Time      `gorm:"autoUpdateTime"`
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+	Username  string         `gorm:"type:varchar(255);not null"`
+	Email     string         `gorm:"type:varchar(255);unique;not null"`
+	Password  string         `gorm:"type:varchar(255);not null"`
+	Age       int            `gorm:"type:int"`
+	Sex       string         `gorm:"type:varchar(10)"`
 }
 
-func (u *User) NewUser(username, email, password, sex string, age int) *User {
-	// ここでバリデーションを行う
-	// バリデーションが通らない場合はエラーを返す
-	return &User{
-		Username: username,
-		Email:    email,
-		Password: password,
-		Age:      age,
-		Sex:      sex,
-	}
+func (u *User) NewUser(userInput *UserInput) *User {
+	u.SetUsername(userInput.Username)
+	u.SetEmail(userInput.Email)
+	u.SetPassword(userInput.Password)
+	u.SetAge(userInput.Age)
+	u.SetSex(userInput.Sex)
+	return u
 }
 
 // ゲッター関数
