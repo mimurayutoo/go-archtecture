@@ -1,4 +1,4 @@
-package db
+package main
 
 import (
 	"fmt"
@@ -12,8 +12,7 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	// docker 環境内での絶対パスを設定しておく。
-	if err := godotenv.Load("/app/.env"); err != nil {
+	if err := godotenv.Load(); err != nil {
 		panic(".envファイルの読み込みに失敗しました")
 	}
 
