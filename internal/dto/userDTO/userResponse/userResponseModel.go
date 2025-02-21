@@ -1,6 +1,7 @@
-package userModel
+package userResponseModel
 
 import (
+	userModel "practice-api/internal/user/model"
 	"time"
 
 	"gorm.io/gorm"
@@ -15,10 +16,10 @@ type ResponseUser struct {
 	Email     string         `json:"email"`
 	Password  string         `json:"-"`
 	Age       int            `json:"age"`
-	Sex       string         `json:"sex"`
+	Token     string         `json:"token,omitempty"`
 }
 
-func (u *ResponseUser) NewUserResponse(user *User) *ResponseUser {
+func (u *ResponseUser) NewUserResponse(user *userModel.User) *ResponseUser {
 	u.SetId(user.ID)
 	u.SetCreatedAt(user.CreatedAt)
 	u.SetUpdatedAt(user.UpdatedAt)
@@ -27,7 +28,12 @@ func (u *ResponseUser) NewUserResponse(user *User) *ResponseUser {
 	u.SetEmail(user.Email)
 	u.SetPassword(user.Password)
 	u.SetAge(user.Age)
-	u.SetSex(user.Sex)
+	return u
+}
+
+func (u *ResponseUser) NewLoginResponse(user *userModel.User, token string) *ResponseUser {
+	u.NewUserResponse(user)
+	u.SetToken(token)
 	return u
 }
 
@@ -67,6 +73,10 @@ func (u *ResponseUser) GetUsername() string {
 	return u.Username
 }
 
+func (u *ResponseUser) GetToken() string {
+	return u.Token
+}
+
 func (u *ResponseUser) SetUsername(username string) {
 	u.Username = username
 }
@@ -95,10 +105,6 @@ func (u *ResponseUser) SetAge(age int) {
 	u.Age = age
 }
 
-func (u *ResponseUser) GetSex() string {
-	return u.Sex
-}
-
-func (u *ResponseUser) SetSex(sex string) {
-	u.Sex = sex
+func (u *ResponseUser) SetToken(token string) {
+	u.Token = token
 }

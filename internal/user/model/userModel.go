@@ -1,6 +1,7 @@
 package userModel
 
 import (
+	userInputModel "practice-api/internal/dto/userDTO/userInput"
 	"time"
 
 	"gorm.io/gorm"
@@ -15,19 +16,23 @@ type User struct {
 	Email     string         `gorm:"type:varchar(255);unique;not null"`
 	Password  string         `gorm:"type:varchar(255);not null"`
 	Age       int            `gorm:"type:int"`
-	Sex       string         `gorm:"type:varchar(10)"`
 }
 
-func (u *User) NewUser(userInput *UserInput) *User {
+// ユーザー新規作成の際のバインド
+func (u *User) NewUser(userInput *userInputModel.UserSignUpInput) *User {
 	u.SetUsername(userInput.Username)
 	u.SetEmail(userInput.Email)
 	u.SetPassword(userInput.Password)
 	u.SetAge(userInput.Age)
-	u.SetSex(userInput.Sex)
 	return u
 }
 
 // ゲッター関数
+
+func (u *User) GetId() uint {
+	return u.ID
+}
+
 func (u *User) GetUsername() string {
 	return u.Username
 }
@@ -44,11 +49,12 @@ func (u *User) GetAge() int {
 	return u.Age
 }
 
-func (u *User) GetSex() string {
-	return u.Sex
+// セッター関数
+
+func (u *User) SetId(id uint) {
+	u.ID = id
 }
 
-// セッター関数
 func (u *User) SetUsername(username string) {
 	u.Username = username
 }
@@ -63,8 +69,4 @@ func (u *User) SetPassword(password string) {
 
 func (u *User) SetAge(age int) {
 	u.Age = age
-}
-
-func (u *User) SetSex(sex string) {
-	u.Sex = sex
 }

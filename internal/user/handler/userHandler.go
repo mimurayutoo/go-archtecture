@@ -2,8 +2,8 @@ package userHandler
 
 import (
 	"net/http"
+	userInputModel "practice-api/internal/dto/userDTO/userInput"
 	"practice-api/internal/response"
-	userModel "practice-api/internal/user/model"
 	userService "practice-api/internal/user/service"
 	"strconv"
 
@@ -20,7 +20,7 @@ func NewUserHandler(service userService.IUserService) *UserHandler {
 }
 
 func (h *UserHandler) CreateUser(c *gin.Context) {
-	var newUser userModel.UserInput
+	var newUser userInputModel.UserSignUpInput
 	if err := c.ShouldBindJSON(&newUser); err != nil {
 		c.JSON(http.StatusBadRequest, response.ErrorResponse(http.StatusBadRequest, "入力が必要な情報が不足しています"))
 		return
@@ -49,4 +49,20 @@ func (h *UserHandler) GetUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, response.SuccessResponse(http.StatusOK, "user found successfully", user))
+}
+
+func (h *UserHandler) Login(c *gin.Context) {
+	var loginUserInput userInputModel.UserLoginInput
+	if err := c.ShouldBindJSON(&loginUserInput); err != nil {
+		c.JSON(http.StatusBadRequest, response.ErrorResponse(http.StatusBadRequest, "入力が必要な情報が不足しています"))
+		return
+	}
+
+	user, err := h.userService.Login(loginUserInput)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, response.ErrorResponse(http.StatusInternalServerError, err.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, response.SuccessResponse(http.StatusOK, "ログインに成功しました", user))
 }

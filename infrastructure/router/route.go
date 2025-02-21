@@ -13,7 +13,8 @@ func SetUpUserRoutes(userHandler *userHandler.UserHandler) *gin.Engine {
 	// r.GET("/users", userHandler.GetUsers)
 	r.GET("/user/:id", userHandler.GetUser)
 	r.POST("/user", userHandler.CreateUser)
-	// r.PUT("/users/:id", userHandler.UpdateUser)
+	r.POST("/user/login", userHandler.Login)
+	// r.PUT("/user/:id", userHandler.UpdateUser)
 	// r.DELETE("/users/:id", userHandler.DeleteUser)
 
 	return r

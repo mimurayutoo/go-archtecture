@@ -4,7 +4,6 @@ import (
 	"errors"
 	userModel "practice-api/internal/user/model"
 	"regexp"
-	"strings"
 )
 
 type UserValidator struct{}
@@ -20,9 +19,6 @@ func (v UserValidator) ValidateUser(user userModel.User) error {
 		return err
 	}
 	if err := v.validateAge(user.GetAge()); err != nil {
-		return err
-	}
-	if err := v.validateSex(user.GetSex()); err != nil {
 		return err
 	}
 	return nil
@@ -63,21 +59,6 @@ func (v UserValidator) validateAge(age int) error {
 	// ageは必須で、0以上である必要がある。
 	if age <= 0 {
 		return errors.New("age is required")
-	}
-
-	return nil
-}
-
-func (v UserValidator) validateSex(sex string) error {
-	// 性別は必須でmaleもしくはfemaleである必要がある。(ここではジェンダー問題は考えない。)
-	// 大文字小文字は区別しない。
-	if sex == "" {
-		return errors.New("sex is required")
-	}
-	lowerSex := strings.ToLower(sex)
-
-	if lowerSex != "female" && lowerSex != "male" {
-		return errors.New("sex is invalid")
 	}
 
 	return nil
