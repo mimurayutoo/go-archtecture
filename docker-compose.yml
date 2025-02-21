@@ -29,9 +29,9 @@ services:
       dockerfile: Dockerfile
     container_name: go_app
     volumes:
-      - .:/go/src/app
-    working_dir: /go/src/app
-    command: ["air"]
+      - .:/app
+    working_dir: /app
+    command: ["air", "-c", ".air.toml"]
     depends_on:
       - db
     ports:
