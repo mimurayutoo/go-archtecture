@@ -1,4 +1,4 @@
-package userAuthRepository
+package userRepository
 
 import (
 	"errors"

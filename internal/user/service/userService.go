@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	userInputModel "practice-api/internal/dto/userDTO/userInput"
-	userResponseModel "practice-api/internal/dto/userDTO/userResponse"
 	userModel "practice-api/internal/user/model"
 	userRepository "practice-api/internal/user/repository"
 	userValidator "practice-api/internal/user/validator"
+	userInputModel "practice-api/shared/dto/userDTO/userInput"
+	userResponseModel "practice-api/shared/dto/userDTO/userResponse"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
