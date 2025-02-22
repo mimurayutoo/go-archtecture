@@ -2,9 +2,9 @@ package userHandler
 
 import (
 	"net/http"
-	userInputModel "practice-api/internal/dto/userDTO/userInput"
-	"practice-api/internal/response"
 	userService "practice-api/internal/user/service"
+	userInputModel "practice-api/shared/dto/userDTO/userInput"
+	"practice-api/shared/response"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

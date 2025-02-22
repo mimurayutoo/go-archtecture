@@ -1,7 +1,7 @@
 package userModel
 
 import (
-	userInputModel "practice-api/internal/dto/userDTO/userInput"
+	userInputModel "practice-api/shared/dto/userDTO/userInput"
 	"time"
 
 	"gorm.io/gorm"
