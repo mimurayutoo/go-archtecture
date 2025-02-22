@@ -1,9 +1,11 @@
 package userModel
 
 import (
+	"errors"
 	userInputModel "practice-api/shared/dto/userDTO/userInput"
 	"time"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -25,6 +27,15 @@ func (u *User) NewUser(userInput *userInputModel.UserSignUpInput) *User {
 	u.SetPassword(userInput.Password)
 	u.SetAge(userInput.Age)
 	return u
+}
+
+func (u *User) HashPassword() error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return errors.New("ハッシュ化に失敗しました")
+	}
+	u.SetPassword(string(hashedPassword))
+	return nil
 }
 
 // ゲッター関数

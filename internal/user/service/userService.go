@@ -46,13 +46,12 @@ func (s UserService) CreateUser(userInput *userInputModel.UserSignUpInput) error
 		return errors.New("すでに同じユーザーが存在しています。")
 	}
 
-	hashedPassword, err := (s.hashPassword(user.GetPassword()))
+	// hashedPassword, err := (s.hashPassword(user.GetPassword()))
+	err := user.HashPassword()
 
 	if err != nil {
 		return errors.New("ハッシュ化に失敗しました")
 	}
-	// 平文からハッシュ化したパスワードに変更
-	user.SetPassword(hashedPassword)
 
 	if err := s.repository.Create(user); err != nil {
 		return err
