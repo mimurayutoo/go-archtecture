@@ -11,12 +11,12 @@ import (
 
 func main() {
 	// DBの初期化
-	var database *gorm.DB // ここでDBの初期化を行う
+	var database *gorm.DB
 	Connect()
 	database = GetDB()
 	// リポジトリ、バリデータ、サービス、ハンドラの初期化
-	userRepo := userRepository.NewUserRepository(database)
-	userService := userService.NewUserService(userRepo)
+	userRepository := userRepository.NewUserRepository(database)
+	userService := userService.NewUserService(userRepository)
 	userHandler := userHandler.NewUserHandler(userService)
 
 	// ルーターの設定
