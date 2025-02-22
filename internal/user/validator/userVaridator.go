@@ -28,7 +28,7 @@ func (v UserValidator) validateName(name string) error {
 	// 名前は必須で、4文字以上である必要がある。
 	print(len(name))
 	if name == "" || len(name) <= 4 {
-		return errors.New("name is required")
+		return errors.New("usernameは必須で、4文字以上である必要があります")
 	}
 	return nil
 }
@@ -41,7 +41,7 @@ func (v UserValidator) validateEmail(email string) error {
 
 	// メールアドレスが正しい形式かをチェック
 	if !re.MatchString(email) {
-		return errors.New("invalid email format")
+		return errors.New("メールアドレスの形式が正しくありません")
 	}
 
 	return nil
@@ -50,7 +50,7 @@ func (v UserValidator) validateEmail(email string) error {
 func (v UserValidator) validatePassword(password string) error {
 	// パスワードは必須で、8文字以上である必要がある。
 	if password == "" || len(password) <= 8 {
-		return errors.New("password is required")
+		return errors.New("passwordは必須で、8文字以上である必要があります")
 	}
 	return nil
 }
@@ -58,7 +58,7 @@ func (v UserValidator) validatePassword(password string) error {
 func (v UserValidator) validateAge(age int) error {
 	// ageは必須で、0以上である必要がある。
 	if age <= 0 {
-		return errors.New("age is required")
+		return errors.New("ageは必須で、0以上である必要があります")
 	}
 
 	return nil

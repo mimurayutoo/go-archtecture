@@ -38,7 +38,7 @@ func (s UserService) CreateUser(userInput *userInputModel.UserSignUpInput) error
 
 	// バリデーションを行う
 	if err := s.validator.ValidateUser(user); err != nil {
-		return errors.New("バリデーションに失敗しました")
+		return err
 	}
 
 	existingUser, _ := s.repository.FindByEmail(user.Email)
@@ -46,7 +46,6 @@ func (s UserService) CreateUser(userInput *userInputModel.UserSignUpInput) error
 		return errors.New("すでに同じユーザーが存在しています。")
 	}
 
-	// hashedPassword, err := (s.hashPassword(user.GetPassword()))
 	err := user.HashPassword()
 
 	if err != nil {
@@ -72,7 +71,7 @@ func (s UserService) GetUserByID(id uint) (*userResponseModel.ResponseUser, erro
 	return &existingUser, nil
 }
 
-func (s UserService) hashPassword(password string) (string, error) {
+func (s UserService) HashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
